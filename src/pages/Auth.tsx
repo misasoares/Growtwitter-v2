@@ -2,22 +2,32 @@ import { Button, TextField, Typography } from "@mui/material";
 import { BodyAuth, ContainerAuth, SectionStyled, SectionStyledTwo, SignStyledForm } from "../components/Auth.Styled";
 import { useEffect, useState } from "react";
 import { createNewUser, getUsers } from "../store/modules/users/usersSlice";
-import { useAppDispatch } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { createUserDTO } from "../config/services/user.service";
 import { loginThunk } from "../store/modules/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
   const dispatch = useAppDispatch();
+  const userLogadoRedux = useAppSelector((state) => state.user);
   const [signup, setSignup] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   //atualiza a lista do usersRedux com os usuários existentes no banco de dados
   useEffect(() => {
     dispatch(getUsers());
   }, []);
+
+  //verifica se existe algum userlogado
+  useEffect(() => {
+    if (userLogadoRedux.token !== "") {
+      navigate("/");
+    }
+  }, [userLogadoRedux]);
 
   //signup ou login
   async function handleSubmit() {
