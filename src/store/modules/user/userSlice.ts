@@ -8,6 +8,7 @@ export interface UserType {
   email: string;
   token: string;
   iconePerfil: string;
+  loading: boolean;
 }
 
 const initialState = {
@@ -17,6 +18,7 @@ const initialState = {
   email: "",
   token: "",
   iconePerfil: "",
+  loading: false,
 };
 
 export const loginThunk = createAsyncThunk("user/login", async (dataLogin: LoginDTO) => {
@@ -32,6 +34,7 @@ export const loginThunk = createAsyncThunk("user/login", async (dataLogin: Login
       username: data.username,
       token: token,
       iconePerfil: data.iconePerfil,
+      loading: false,
     };
 
     return userLogado;
@@ -53,13 +56,17 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginThunk.pending, (state) => {
-        return state;
+        state.loading = true;
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
         if (action.payload) {
-          state = action.payload;
+          Object.assign(state, action.payload); // Atualizando os campos do usuário no estado
         }
-        return state;
+        state.loading = false;
+      })
+      .addCase(loginThunk.rejected, (state) => {
+        state.loading = false;
+        console.log("Aconteceu algum erro");
       });
   },
 });

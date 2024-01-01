@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, CircularProgress, TextField, Typography } from "@mui/material";
 import { BodyAuth, ContainerAuth, SectionStyled, SectionStyledTwo, SignStyledForm } from "../components/Auth.Styled";
 import { useEffect, useState } from "react";
 import { createNewUser, getUsers } from "../store/modules/users/usersSlice";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 export default function Auth() {
   const dispatch = useAppDispatch();
   const userLogadoRedux = useAppSelector((state) => state.user);
+  const usersRedux = useAppSelector((state) => state.users);
   const [signup, setSignup] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -98,7 +99,7 @@ export default function Auth() {
               </span>
             </Typography>
             <Button onClick={handleSubmit} variant="contained" fullWidth sx={{ margin: 1, backgroundColor: "#1d9bf0" }}>
-              {signup ? "Cadastrar" : "Entrar"}
+              {usersRedux.loading === true ? <CircularProgress color="inherit" /> : userLogadoRedux.loading === true ? <CircularProgress color="inherit" /> : signup ? "Cadastrar" : "Entrar"}
             </Button>
           </SignStyledForm>
         </SectionStyledTwo>

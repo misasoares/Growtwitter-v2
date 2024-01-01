@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { logout } from "../store/modules/user/userSlice";
 import TimeLine from "../components/TimeLine";
+import { BodyContainer } from "../components/HomeStyled";
+import Navbar from "../components/Navbar/Navbar";
 
 export default function Home() {
   const userLogadoRedux = useAppSelector((state) => state.user);
@@ -21,17 +23,24 @@ export default function Home() {
     dispatch(logout());
   }
 
-  return (
-    <div>
-      <Typography variant="h2" component="h1">
-        Home
-      </Typography>
+  useEffect(() => {
+    console.log(userLogadoRedux.loading, "---");
+  }, [userLogadoRedux.loading]);
 
-      <Button onClick={handleLogout} variant="contained">
-        Desconectar
-      </Button>
+  return (
+    <BodyContainer>
+      <div>
+        <Navbar />
+        <Typography variant="h2" component="h1">
+          Home
+        </Typography>
+
+        <Button onClick={handleLogout} variant="contained">
+          Desconectar
+        </Button>
+      </div>
 
       <TimeLine />
-    </div>
+    </BodyContainer>
   );
 }

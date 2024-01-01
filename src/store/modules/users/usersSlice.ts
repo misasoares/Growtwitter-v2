@@ -11,7 +11,17 @@ export interface UsersType {
   iconePerfil: string;
 }
 
-const initialState: UsersType[] = [];
+interface UsersState {
+  data: UsersType[];
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: UsersState = {
+  data: [],
+  loading: false,
+  error: null,
+};
 
 export const getUsers = createAsyncThunk("users/getUsers", async () => {
   try {
@@ -19,10 +29,10 @@ export const getUsers = createAsyncThunk("users/getUsers", async () => {
 
     const { data } = response;
 
-    return data;
+    return { data, loading: false, error: null };
   } catch (error) {
     console.error("Erro ao criar usuários:", error);
-    return null;
+    throw error;
   }
 });
 
@@ -42,7 +52,7 @@ export const createNewUser = createAsyncThunk("users/createNewUser", async (data
     };
   } catch (error) {
     console.error("Erro ao criar usuários:", error);
-    return null;
+    throw error;
   }
 });
 
@@ -50,7 +60,7 @@ const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    updateArrayUsers(state, action: PayloadAction<UsersType[]>) {
+    updateArrayUsers(state, action: PayloadAction<UsersState>) {
       state = action.payload;
       return state;
     },
@@ -58,13 +68,14 @@ const usersSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUsers.pending, (state) => {
-        return state;
+        state.loading = true;
+        state.error = null;
       })
       .addCase(getUsers.fulfilled, (state, action) => {
+        state.loading = false;
         if (action.payload) {
           state = action.payload;
         }
-        return state;
       });
   },
 });
