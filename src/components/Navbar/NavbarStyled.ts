@@ -3,6 +3,21 @@ import styled from "styled-components";
 export const NavContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  width: 250px;
+  padding: 20px;
+  width: 200px;
+  align-items: center;
+  height: 100vh;
+`;
+
+export const NavMain = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+export const BottomSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  margin-top: 400px;
 `;

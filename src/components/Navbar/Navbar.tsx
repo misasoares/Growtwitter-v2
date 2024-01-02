@@ -1,5 +1,5 @@
-import { Button } from "@mui/material";
-import { NavContainer } from "./NavbarStyled";
+import { Button, Typography } from "@mui/material";
+import { BottomSection, NavContainer, NavMain } from "./NavbarStyled";
 
 interface NavProps {
   handleLogout: () => void;
@@ -8,16 +8,20 @@ interface NavProps {
 export default function Navbar({ handleLogout }: NavProps) {
   return (
     <NavContainer>
-      <div>Aqui vai o ícone da growdev</div>
-      <div>Página inicial</div>
-      <div>Explorar</div>
-      <div>Perfil</div>
-      <Button variant="contained">Tweetar</Button>
+      <NavMain>
+        <div>Aqui vai o ícone da growdev</div>
+        <Typography fontWeight="bold">Página inicial</Typography>
+        <Typography fontWeight="bold">Explorar</Typography>
+        <Typography fontWeight="bold">Perfil</Typography>
+        <Button variant="contained">Tweetar</Button>
 
-      <div>Aqui vai o ícone do usuário logado - posicionar ao fim da tela</div>
-      <Button onClick={handleLogout} variant="contained">
-        Desconectar
-      </Button>
+        <BottomSection>
+          <div>Aqui vai o ícone do usuário logado - posicionar ao fim da tela, em baixo</div>
+          <Button onClick={handleLogout} variant="contained">
+            Desconectar
+          </Button>
+        </BottomSection>
+      </NavMain>
     </NavContainer>
   );
 }
