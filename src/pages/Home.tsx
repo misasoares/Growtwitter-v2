@@ -1,10 +1,10 @@
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { logout } from "../store/modules/user/userSlice";
-import TimeLine from "../components/TimeLine";
-import { BodyContainer } from "../components/HomeStyled";
+import TimeLine from "../components/Timeline/TimeLine";
+import { BodyContainer, HomeMain } from "../components/HomeStyled";
 import Navbar from "../components/Navbar/Navbar";
 
 export default function Home() {
@@ -23,24 +23,16 @@ export default function Home() {
     dispatch(logout());
   }
 
-  useEffect(() => {
-    console.log(userLogadoRedux.loading, "---");
-  }, [userLogadoRedux.loading]);
-
   return (
     <BodyContainer>
-      <div>
-        <Navbar />
+      <Navbar handleLogout={handleLogout} />
+      <HomeMain>
+        <TimeLine />
+
         <Typography variant="h2" component="h1">
-          Home
+          Aqui vai alguma coisa
         </Typography>
-
-        <Button onClick={handleLogout} variant="contained">
-          Desconectar
-        </Button>
-      </div>
-
-      <TimeLine />
+      </HomeMain>
     </BodyContainer>
   );
 }
