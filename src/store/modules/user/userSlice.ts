@@ -9,6 +9,10 @@ export interface UserType {
   token: string;
   iconePerfil: string;
   loading: boolean;
+  error: {
+    code: number;
+    message: string;
+  };
 }
 
 const initialState = {
@@ -19,6 +23,10 @@ const initialState = {
   token: "",
   iconePerfil: "",
   loading: false,
+  res: {
+    code: 201,
+    message: "",
+  },
 };
 
 export const loginThunk = createAsyncThunk("user/login", async (dataLogin: LoginDTO) => {
@@ -35,12 +43,22 @@ export const loginThunk = createAsyncThunk("user/login", async (dataLogin: Login
       token: token,
       iconePerfil: data.iconePerfil,
       loading: false,
+      res: {
+        code: response.code,
+        message: response.message,
+      },
     };
 
     return userLogado;
   } catch (error) {
     console.error("Erro ao fazer login:", error);
-    return null;
+    return {
+      ...initialState,
+      res: {
+        code: 404,
+        message: `${error}`,
+      },
+    };
   }
 });
 

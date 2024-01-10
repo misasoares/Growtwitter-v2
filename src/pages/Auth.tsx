@@ -1,4 +1,4 @@
-import { Button, CircularProgress, TextField, Typography } from "@mui/material";
+import { Alert, Button, CircularProgress, TextField, Typography } from "@mui/material";
 import { BodyAuth, ContainerAuth, SectionStyled, SectionStyledTwo, SignStyledForm } from "../components/Auth.Styled";
 import { useEffect, useState } from "react";
 import { createNewUser, getUsers } from "../store/modules/users/usersSlice";
@@ -16,6 +16,8 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorLogin, setErrorLogin] = useState(false);
+  const [successLogin, setSuccessLogin] = useState(false);
   const navigate = useNavigate();
 
   //atualiza a lista do usersRedux com os usuários existentes no banco de dados
@@ -23,10 +25,31 @@ export default function Auth() {
     dispatch(getUsers());
   }, []);
 
+  //cria msg de erro
+  useEffect(() => {
+    if (userLogadoRedux.res.code === 404) {
+      setErrorLogin(true);
+
+      setTimeout(() => {
+        setErrorLogin(false);
+      }, 3000);
+    } else {
+      if (userLogadoRedux.res.code === 200) {
+        setSuccessLogin(true);
+        setErrorLogin(false);
+      }
+      setTimeout(() => {
+        setSuccessLogin(false);
+      }, 3000);
+    }
+  }, [userLogadoRedux]);
+
   //verifica se existe algum userlogado
   useEffect(() => {
     if (userLogadoRedux.token !== "") {
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     }
   }, [userLogadoRedux]);
 
@@ -104,6 +127,8 @@ export default function Auth() {
           </SignStyledForm>
         </SectionStyledTwo>
       </ContainerAuth>
+      <div style={{ position: "absolute", left: "60%", top: "68%" }}>{errorLogin && <Alert severity="error">Falha ao fazer login, revise seus dados.</Alert>}</div>
+      <div style={{ position: "absolute", left: "65%", top: "68%" }}>{successLogin && <Alert severity="success">Login com sucesso.</Alert>}</div>
     </BodyAuth>
   );
 }
