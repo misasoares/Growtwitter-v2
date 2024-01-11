@@ -6,6 +6,8 @@ import { logout } from "../store/modules/user/userSlice";
 import TimeLine from "../components/Timeline/TimeLine";
 import { BodyContainer, HomeMain } from "../components/HomeStyled";
 import Navbar from "../components/Navbar/Navbar";
+import { getTweets } from "../config/services/tweet.service";
+
 
 export default function Home() {
   const userLogadoRedux = useAppSelector((state) => state.user);
@@ -19,6 +21,11 @@ export default function Home() {
     }
   }, [userLogadoRedux]);
 
+  //pega tweets
+  useEffect(() => {
+    getTweets();
+  }, []);
+
   function handleLogout() {
     dispatch(logout());
   }
@@ -27,7 +34,7 @@ export default function Home() {
     <BodyContainer>
       <Navbar handleLogout={handleLogout} />
       <HomeMain>
-        <TimeLine />
+        <TimeLine tweets={["tweets"]} users={["users"]} />
 
         <Typography variant="h2" component="h1">
           Aqui vai alguma coisa

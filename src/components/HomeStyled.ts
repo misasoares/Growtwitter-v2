@@ -5,8 +5,8 @@ export const BodyContainer = styled.div`
 `;
 
 export const HomeMain = styled.div`
-  display: flex;
   width: 100vw;
   height: 100vh;
+  display: flex;
   justify-content: center;
 `;

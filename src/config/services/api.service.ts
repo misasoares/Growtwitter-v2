@@ -4,7 +4,6 @@ const apiService = axios.create({
   baseURL: "http://localhost:3333/",
 });
 
-
 export interface ResponseAPI {
   ok?: boolean;
   code?: number;
@@ -15,9 +14,8 @@ export interface ResponseAPI {
 
 export default apiService;
 
-
-// apiService.interceptors.request.use((config) => {
-//   const token = localStorage.getItem("token");
-//   config.headers.Authorization = token ? token : "";
-//   return config;
-// });
+apiService.interceptors.request.use((config) => {
+  const token = ;
+  config.headers.Authorization = token ? token : "";
+  return config;
+});
