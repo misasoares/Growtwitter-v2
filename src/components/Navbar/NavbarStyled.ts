@@ -4,7 +4,7 @@ export const NavContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  width: 200px;
+  width: 15vw;
   align-items: center;
   height: 100vh;
 `;
