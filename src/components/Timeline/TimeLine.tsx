@@ -1,10 +1,24 @@
 import { Typography } from "@mui/material";
 import { TimelineContainer } from "./TimelineStyled";
+import { TweetsDto } from "../../store/modules/tweets/tweetsSlice";
+import { useEffect } from "react";
+import CardTweet from "../card-tweets/CardTweet";
 
-export default function TimeLine() {
+interface TimeLineProps {
+  tweets: TweetsDto[];
+  users: any[];
+}
+
+export default function TimeLine({ tweets, users }: TimeLineProps) {
   return (
     <TimelineContainer>
-      <Typography variant="h1">TIMELINE</Typography>
+      <div>
+        {tweets.map((tweet) => (
+          <div key={tweet.id}>
+            <CardTweet tweet={tweet} />
+          </div>
+        ))}
+      </div>
     </TimelineContainer>
   );
 }

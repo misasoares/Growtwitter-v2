@@ -1,11 +1,11 @@
 import { Alert, Button, CircularProgress, TextField, Typography } from "@mui/material";
-import { BodyAuth, ContainerAuth, SectionStyled, SectionStyledTwo, SignStyledForm } from "../components/Auth.Styled";
 import { useEffect, useState } from "react";
-import { createNewUser, getUsers } from "../store/modules/users/usersSlice";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { createUserDTO } from "../config/services/user.service";
-import { loginThunk } from "../store/modules/user/userSlice";
 import { useNavigate } from "react-router-dom";
+import { BodyAuth, ContainerAuth, SectionStyled, SectionStyledTwo, SignStyledForm } from "../components/Auth.Styled";
+import { createUserDTO } from "../config/services/user.service";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { loginThunk } from "../store/modules/user/userSlice";
+import { createNewUser, getUsers } from "../store/modules/users/usersSlice";
 
 export default function Auth() {
   const dispatch = useAppDispatch();
