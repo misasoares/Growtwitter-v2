@@ -1,15 +1,13 @@
+import { TweetsDto } from "../../store/modules/tweets/tweetsSlice";
 
-interface CardTweetProps{
-    
+interface CardProps {
+  tweet: TweetsDto;
 }
 
-
-export default function CardTweet(){
-    return (
-        <>
-        <div>
-            {tweet}
-        </div>
-        </>
-    )
+export default function CardTweet({ tweet }: CardProps) {
+  return (
+    <>
+      <div>{tweet.content}</div>
+    </>
+  );
 }
