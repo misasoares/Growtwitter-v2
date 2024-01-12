@@ -10,6 +10,7 @@ import { logout } from "../store/modules/user/userSlice";
 
 export default function Home() {
   const userLogadoRedux = useAppSelector((state) => state.user);
+  const tweetsRedux = useAppSelector((state) => state.tweets);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -34,7 +35,7 @@ export default function Home() {
     <BodyContainer>
       <Navbar handleLogout={handleLogout} />
       <HomeMain>
-        <TimeLine users={["users"]} />
+        <TimeLine users={["users"]} tweets={tweetsRedux.tweets} />
 
         <Typography variant="h2" component="h1">
           Aqui vai alguma coisa

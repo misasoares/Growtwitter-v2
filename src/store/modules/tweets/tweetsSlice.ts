@@ -1,9 +1,14 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getAllTweets } from "../../../config/services/tweets.service";
 
-interface TweetsDto {
+export interface TweetsDto {
   id: string;
   content: string;
+  type: string;
+  User: any;
+  Likes: any[];
+  originalTweet: TweetsDto;
+  retweets: TweetsDto[];
 }
 
 interface TweetsSliceType {
@@ -24,7 +29,13 @@ const initialState: TweetsSliceType = {
 export const getTweetThunk = createAsyncThunk("tweets/getTweets", async () => {
   try {
     const response = await getAllTweets();
-    console.log(response);
+    const { data, code, message } = response;
+
+    return {
+      tweets: data,
+      loading: false,
+      status: { code, message },
+    };
   } catch (error) {
     console.log("erro ao pegar tweets", error);
 
@@ -46,6 +57,16 @@ const tweetsSlice = createSlice({
       state = action.payload;
       return state;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getTweetThunk.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getTweetThunk.fulfilled, (state, action) => {
+        state = action.payload;
+        return state;
+      });
   },
 });
 

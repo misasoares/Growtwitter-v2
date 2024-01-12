@@ -4,7 +4,11 @@ import apiService from "./api.service";
 export async function getAllTweets() {
   try {
     const response = await apiService.get("tweets");
-    console.log(response)
+    return {
+      message: response.data.message,
+      code: response.data.code,
+      data: response.data.data,
+    };
   } catch (error: any) {
     return {
       ok: error.response.data?.ok,
