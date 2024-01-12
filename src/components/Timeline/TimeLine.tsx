@@ -1,8 +1,9 @@
 import { Typography } from "@mui/material";
 import { TimelineContainer } from "./TimelineStyled";
+import { TweetsDTO } from "../../store/modules/tweets/tweetsSlice";
 
 interface TimeLineProps {
-  tweets: any[];
+  tweets?: TweetsDTO[];
   users: any[];
 }
 

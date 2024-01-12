@@ -12,10 +12,10 @@ export interface ResponseAPI {
   data?: any;
 }
 
-export default apiService;
-
 apiService.interceptors.request.use((config) => {
-  const token = ;
-  config.headers.Authorization = token ? token : "";
+  const userToken = localStorage.getItem("token");
+  const token = `Bearer ${userToken}`;
+  config.headers.authorization = token ? token : "";
   return config;
 });
+export default apiService;
