@@ -35,6 +35,9 @@ export const loginThunk = createAsyncThunk("user/login", async (dataLogin: Login
     const { data } = response.data.user;
     const token = response.data.token;
 
+    //seta token para poder usar no interceptor. não funcionou usando o userSlice
+    localStorage.setItem("token", token);
+
     const userLogado = {
       id: data.id,
       name: data.name,
