@@ -7,17 +7,24 @@ import TimeLine from "../components/Timeline/TimeLine";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getTweetThunk } from "../store/modules/tweets/tweetsSlice";
 import { logout } from "../store/modules/user/userSlice";
+import { getUsersThunk } from "../store/modules/users/usersSlice";
 
 export default function Home() {
   const userLogadoRedux = useAppSelector((state) => state.user);
+  const usersRedux = useAppSelector((state) => state.users);
   const tweetsRedux = useAppSelector((state) => state.tweets);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  //pega tweets
+  //pega tweets e usuários
   useEffect(() => {
     dispatch(getTweetThunk());
+    dispatch(getUsersThunk());
   }, []);
+
+  useEffect(() => {
+    console.log(usersRedux);
+  }, [usersRedux]);
 
   //valida se existe algum user logado
   useEffect(() => {
@@ -35,7 +42,7 @@ export default function Home() {
     <BodyContainer>
       <Navbar handleLogout={handleLogout} />
       <HomeMain>
-        <TimeLine users={["users"]} tweets={tweetsRedux.tweets} />
+        <TimeLine tweets={tweetsRedux.tweets} />
 
         <Typography variant="h2" component="h1">
           Aqui vai alguma coisa

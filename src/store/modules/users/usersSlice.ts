@@ -6,7 +6,6 @@ export interface UsersType {
   id: string;
   name: string;
   email: string;
-  password: string;
   username: string;
   iconePerfil: string;
 }
@@ -23,7 +22,7 @@ const initialState: UsersState = {
   error: null,
 };
 
-export const getUsers = createAsyncThunk("users/getUsers", async () => {
+export const getUsersThunk = createAsyncThunk("users/getUsersThunk", async () => {
   try {
     const response = await getAllUsers();
 
@@ -67,15 +66,14 @@ const usersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUsers.pending, (state) => {
+      .addCase(getUsersThunk.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getUsers.fulfilled, (state, action) => {
+      .addCase(getUsersThunk.fulfilled, (state, action) => {
         state.loading = false;
-        if (action.payload) {
-          state = action.payload;
-        }
+        state.data = action.payload.data;
+        state.error = action.payload.error;
       });
   },
 });

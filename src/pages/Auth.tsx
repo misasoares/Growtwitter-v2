@@ -5,7 +5,7 @@ import { BodyAuth, ContainerAuth, SectionStyled, SectionStyledTwo, SignStyledFor
 import { createUserDTO } from "../config/services/user.service";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { loginThunk } from "../store/modules/user/userSlice";
-import { createNewUser, getUsers } from "../store/modules/users/usersSlice";
+import { createNewUser, getUsersThunk } from "../store/modules/users/usersSlice";
 
 export default function Auth() {
   const dispatch = useAppDispatch();
@@ -22,7 +22,7 @@ export default function Auth() {
 
   //atualiza a lista do usersRedux com os usuários existentes no banco de dados
   useEffect(() => {
-    dispatch(getUsers());
+    dispatch(getUsersThunk());
   }, []);
 
   //cria msg de erro
@@ -66,7 +66,7 @@ export default function Auth() {
 
       dispatch(createNewUser(signupUser));
       //atualiza a lista do usersRedux com os usuários existentes no banco de dados
-      dispatch(getUsers());
+      dispatch(getUsersThunk());
       //volta layout para login
       setSignup(false);
     } else {

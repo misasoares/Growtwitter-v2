@@ -1,11 +1,12 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getAllTweets } from "../../../config/services/tweets.service";
+import { UserType } from "../user/userSlice";
 
 export interface TweetsDto {
   id: string;
   content: string;
   type: string;
-  User: any;
+  User: UserType;
   Likes: any[];
   originalTweet: TweetsDto;
   retweets: TweetsDto[];

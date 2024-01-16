@@ -5,4 +5,5 @@ export const TimelineContainer = styled.div`
   flex-direction: column;
   width: 100vw;
   border: 1px solid black;
+  overflow-y: scroll;
 `;
